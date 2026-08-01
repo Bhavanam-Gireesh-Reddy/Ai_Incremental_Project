@@ -236,6 +236,13 @@ textarea:focus-visible {
     padding: 48px 0 70px;
 }
 
+.brand-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
 .page-title {
     margin-bottom: 8px;
 
@@ -350,13 +357,17 @@ textarea:focus-visible {
 }
 
 /* ============================================================
-   MODEL GRID
+   MODEL GRID  (compact boxed layout — models sit in a row
+   under each category heading, like small labeled boxes)
 ============================================================ */
 
 .models-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 16px;
+
+    margin-bottom: 10px;
 }
 
 .model-btn {
@@ -364,22 +375,26 @@ textarea:focus-visible {
     isolation: isolate;
     overflow: hidden;
 
-    display: block;
-    min-height: 160px;
-    padding: 30px 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+
+    min-height: 0;
+    padding: 16px 24px;
 
     color: var(--text);
     background: var(--card);
-    border: 1px solid rgba(226, 232, 240, 0.9);
-    border-radius: var(--radius);
+    border: 1.5px solid rgba(99, 102, 241, 0.35);
+    border-radius: var(--radius-sm);
 
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-sm);
     backdrop-filter: blur(14px);
 
-    font-size: 17px;
-    font-weight: 750;
-    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
     text-decoration: none;
+    white-space: nowrap;
     cursor: pointer;
 
     transition: var(--transition);
@@ -390,15 +405,15 @@ textarea:focus-visible {
     position: absolute;
     z-index: -1;
 
-    width: 120px;
-    height: 120px;
-    right: -70px;
-    bottom: -70px;
+    width: 90px;
+    height: 90px;
+    right: -55px;
+    bottom: -55px;
 
     background: linear-gradient(
         135deg,
-        rgba(99, 102, 241, 0.2),
-        rgba(6, 182, 212, 0.2)
+        rgba(99, 102, 241, 0.18),
+        rgba(6, 182, 212, 0.18)
     );
 
     border-radius: 50%;
@@ -416,15 +431,15 @@ textarea:focus-visible {
         var(--secondary-dark)
     );
 
-    transform: translateY(-8px);
-    box-shadow: 0 22px 45px rgba(79, 70, 229, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(79, 70, 229, 0.25);
 }
 
 .model-btn:hover::before {
-    width: 280px;
-    height: 280px;
-    right: -80px;
-    bottom: -100px;
+    width: 200px;
+    height: 200px;
+    right: -70px;
+    bottom: -80px;
 
     background: rgba(255, 255, 255, 0.08);
 }
@@ -434,16 +449,17 @@ textarea:focus-visible {
     align-items: center;
     justify-content: center;
 
-    width: 62px;
-    height: 62px;
-    margin: 0 auto 16px;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    margin: 0;
 
     color: var(--primary);
     background: linear-gradient(135deg, #eef2ff, #ecfeff);
     border: 1px solid rgba(99, 102, 241, 0.14);
-    border-radius: 18px;
+    border-radius: 12px;
 
-    font-size: 30px;
+    font-size: 20px;
 
     transition: var(--transition);
 }
@@ -453,6 +469,44 @@ textarea:focus-visible {
     background: rgba(255, 255, 255, 0.17);
     border-color: rgba(255, 255, 255, 0.25);
     transform: scale(1.08) rotate(-3deg);
+}
+
+/* ============================================================
+   CATEGORY HEADINGS (model groups)
+============================================================ */
+
+.category-title {
+    position: relative;
+
+    margin: 34px 0 16px;
+    padding-left: 16px;
+
+    color: var(--text);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+}
+
+.category-title:first-of-type {
+    margin-top: 10px;
+}
+
+.category-title::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+
+    width: 5px;
+
+    background: linear-gradient(
+        180deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    border-radius: 10px;
 }
 
 /* ============================================================
@@ -1266,10 +1320,6 @@ textarea:focus-visible {
         padding: 42px 32px;
     }
 
-    .models-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-
     .compare-table,
     .pred-table {
         display: block;
@@ -1314,27 +1364,18 @@ textarea:focus-visible {
         margin-bottom: 24px;
     }
 
-    .hero {
-        padding: 34px 24px;
-        border-radius: 20px;
-    }
-
-    .hero h1 {
-        font-size: 30px;
-    }
-
-    .hero p {
-        font-size: 14px;
+    .category-title {
+        font-size: 19px;
+        margin: 30px 0 14px;
     }
 
     .models-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 12px;
     }
 
     .model-btn {
-        min-height: auto;
-        padding: 24px 18px;
+        flex: 1 1 100%;
+        padding: 14px 18px;
     }
 
     .card {
