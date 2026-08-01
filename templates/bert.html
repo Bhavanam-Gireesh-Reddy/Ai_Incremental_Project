@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentiment (BERT) · MarketPulse AI</title>
+<link rel="stylesheet"  href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+<div class="navbar">
+  <a class="brand" href="index.html">📈 MarketPulse AI</a>
+  <div class="nav-links">
+  </div>
+</div>
+<div class="container">
+<h1 class="page-title">🔤  Sentiment (BERT)</h1>
+<p class="page-subtitle">Endpoint: POST /sentiment-bert  •  Use case: Contextual sentiment</p>
+<div class="card">
+  <div class="section-title">Input</div>
+      <div class="form-group"><label class="form-label">text</label><textarea class="form-textarea" id="in-text"></textarea></div>
+      <button class="submit-btn" onclick="runModel()">Predict</button>
+</div>
+<div class="card">
+  <div class="section-title">Output</div>
+  <div class="output-card" id="model-output">Result will appear here…</div>
+</div>
+<script>
+const ENDPOINT = "/sentiment-bert";
+
+async function runModel() {
+  const text = document.getElementById("in-text").value.trim();
+  const out = document.getElementById("model-output");
+
+  if (!text) {
+    out.textContent = "Please enter text before predicting.";
+    return;
+  }
+
+  out.textContent = "⏳ Predicting sentiment...";
+
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ text: text })
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      throw new Error(json.detail || "Prediction failed.");
+    }
+
+    out.innerHTML = `
+  <div class="prediction-result">
+    <div class="prediction-line">
+      <strong>Text:</strong> ${escapeHtml(text)}
+    </div>
+    <div class="prediction-line">
+      <strong>Model:</strong> ${escapeHtml(json.model)}
+    </div>
+    <div class="prediction-line">
+      <strong>Sentiment:</strong> ${escapeHtml(json.sentiment.toUpperCase())}
+    </div>
+  </div>
+`;
+
+  } catch (error) {
+    console.error("Prediction error:", error);
+    out.textContent = "❌ Error: " + error.message;
+  }
+}
+
+function escapeHtml(value) {
+  const element = document.createElement("div");
+  element.textContent = String(value);
+  return element.innerHTML;
+}
+</script>
+</div>
+</body>
+</html>

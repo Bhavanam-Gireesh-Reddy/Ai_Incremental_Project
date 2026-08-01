@@ -1,0 +1,5 @@
+.env
+Incremental/
+.chroma_db/
+.data/
+__pycache__/

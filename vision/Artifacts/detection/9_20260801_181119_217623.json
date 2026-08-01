@@ -1,0 +1,184 @@
+{
+    "image_name": "9_20260801_181119_217623.jpg",
+    "source_image_path": "/home/kasm-user/Desktop/Ai_Incremental_Project/vision/Artifacts/detection/9_20260801_181119_217623.jpg",
+    "total_objects": 17,
+    "object_counts": {
+        "long_sleeve_outwear": 8,
+        "trousers": 4,
+        "long_sleeve_top": 5
+    },
+    "detections": [
+        {
+            "class": "long_sleeve_outwear",
+            "confidence": 0.7482,
+            "bounding_box": {
+                "x1": 136,
+                "y1": 77,
+                "x2": 149,
+                "y2": 138
+            }
+        },
+        {
+            "class": "trousers",
+            "confidence": 0.6794,
+            "bounding_box": {
+                "x1": 94,
+                "y1": 121,
+                "x2": 120,
+                "y2": 212
+            }
+        },
+        {
+            "class": "trousers",
+            "confidence": 0.6785,
+            "bounding_box": {
+                "x1": 36,
+                "y1": 129,
+                "x2": 53,
+                "y2": 194
+            }
+        },
+        {
+            "class": "trousers",
+            "confidence": 0.6675,
+            "bounding_box": {
+                "x1": 118,
+                "y1": 122,
+                "x2": 150,
+                "y2": 215
+            }
+        },
+        {
+            "class": "long_sleeve_outwear",
+            "confidence": 0.6666,
+            "bounding_box": {
+                "x1": 89,
+                "y1": 82,
+                "x2": 101,
+                "y2": 137
+            }
+        },
+        {
+            "class": "trousers",
+            "confidence": 0.645,
+            "bounding_box": {
+                "x1": 19,
+                "y1": 130,
+                "x2": 37,
+                "y2": 207
+            }
+        },
+        {
+            "class": "long_sleeve_outwear",
+            "confidence": 0.4853,
+            "bounding_box": {
+                "x1": 89,
+                "y1": 72,
+                "x2": 118,
+                "y2": 143
+            }
+        },
+        {
+            "class": "long_sleeve_top",
+            "confidence": 0.4489,
+            "bounding_box": {
+                "x1": 15,
+                "y1": 97,
+                "x2": 31,
+                "y2": 148
+            }
+        },
+        {
+            "class": "long_sleeve_outwear",
+            "confidence": 0.4002,
+            "bounding_box": {
+                "x1": 135,
+                "y1": 113,
+                "x2": 150,
+                "y2": 138
+            }
+        },
+        {
+            "class": "long_sleeve_top",
+            "confidence": 0.3772,
+            "bounding_box": {
+                "x1": 16,
+                "y1": 124,
+                "x2": 31,
+                "y2": 148
+            }
+        },
+        {
+            "class": "long_sleeve_outwear",
+            "confidence": 0.3196,
+            "bounding_box": {
+                "x1": 47,
+                "y1": 95,
+                "x2": 56,
+                "y2": 138
+            }
+        },
+        {
+            "class": "long_sleeve_outwear",
+            "confidence": 0.3168,
+            "bounding_box": {
+                "x1": 47,
+                "y1": 118,
+                "x2": 56,
+                "y2": 139
+            }
+        },
+        {
+            "class": "long_sleeve_top",
+            "confidence": 0.3084,
+            "bounding_box": {
+                "x1": 15,
+                "y1": 90,
+                "x2": 56,
+                "y2": 147
+            }
+        },
+        {
+            "class": "long_sleeve_top",
+            "confidence": 0.2967,
+            "bounding_box": {
+                "x1": 47,
+                "y1": 95,
+                "x2": 56,
+                "y2": 138
+            }
+        },
+        {
+            "class": "long_sleeve_top",
+            "confidence": 0.271,
+            "bounding_box": {
+                "x1": 46,
+                "y1": 95,
+                "x2": 56,
+                "y2": 139
+            }
+        },
+        {
+            "class": "long_sleeve_outwear",
+            "confidence": 0.2604,
+            "bounding_box": {
+                "x1": 91,
+                "y1": 115,
+                "x2": 101,
+                "y2": 138
+            }
+        },
+        {
+            "class": "long_sleeve_outwear",
+            "confidence": 0.2564,
+            "bounding_box": {
+                "x1": 119,
+                "y1": 72,
+                "x2": 149,
+                "y2": 147
+            }
+        }
+    ],
+    "annotated_image_path": "/home/kasm-user/Desktop/Ai_Incremental_Project/vision/Artifacts/detection/detected_9_20260801_181119_217623.jpg",
+    "json_file_path": "/home/kasm-user/Desktop/Ai_Incremental_Project/vision/Artifacts/detection/9_20260801_181119_217623.json"
+}

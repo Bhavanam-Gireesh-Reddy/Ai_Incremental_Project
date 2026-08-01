@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNN · MarketPulse AI</title>
+<link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+<div class="navbar">
+  <a class="brand" href="index.html">📈 MarketPulse AI</a>
+  <div class="nav-links">
+  </div>
+</div>
+<div class="container">
+<h1 class="page-title">🖼️  CNN</h1>
+<p class="page-subtitle">Endpoint: POST /predict-cnn  •  Use case: Image classification</p>
+<div class="card">
+  <div class="section-title">Input</div>
+      <div class="form-group"><label class="form-label">image</label><input type="file" accept="image/*" class="form-input" id="in-image"></div>
+      <button class="submit-btn" onclick="runModel()">Predict</button>
+</div>
+<div class="card">
+  <div class="section-title">Output</div>
+  <div class="output-card" id="model-output">Result will appear here…</div>
+</div>
+<script>
+const ENDPOINT = "/predict-cnn";
+
+async function runModel() {
+    const out = document.getElementById("model-output");
+    const fileInput = document.getElementById("in-image");
+
+    // check a file is selected
+    if (!fileInput.files[0]) {
+        out.innerHTML = "<span style='color:red'>❌ Please select an image first</span>";
+        return;
+    }
+
+    // build form-data for file upload
+    const formData = new FormData();
+    formData.append("image", fileInput.files[0]);
+
+    out.innerHTML = "⏳ Predicting...";
+
+    try {
+        const response = await fetch(ENDPOINT, {
+            method: "POST",
+            body: formData   // no Content-Type header, browser sets it
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const result = await response.json();
+        showResult(result);
+
+    } catch (error) {
+        out.innerHTML =
+            "<span style='color:red'>❌ " +
+            error.message +
+            "</span>";
+    }
+}
+
+// build a nice view from the response
+function showResult(result) {
+    const out = document.getElementById("model-output");
+
+    if (result.status !== "success") {
+        out.innerHTML = "<span style='color:red'>❌ " + result.message + "</span>";
+        return;
+    }
+
+    const pred = result.prediction;
+
+    let html = "<div class='result-header'>";
+    html += "Status: <span class='status-ok'>✅ " + result.status + "</span><br>";
+    html += "Method: <b>" + result.method.toUpperCase() + "</b><br>";
+    html += "File: <b>" + result.filename + "</b>";
+    html += "</div>";
+
+    // show prediction as a small table
+    html += "<table class='pred-table'>";
+    html += "<tr><th>Field</th><th>Value</th></tr>";
+
+    // if prediction is an object, loop its keys; else just show it
+    if (typeof pred === "object" && pred !== null) {
+        for (const key in pred) {
+            html += "<tr><td>" + key + "</td><td>" + pred[key] + "</td></tr>";
+        }
+    } else {
+        html += "<tr><td>result</td><td>" + pred + "</td></tr>";
+    }
+
+    html += "</table>";
+
+    out.innerHTML = html;
+}
+</script>
+</div>
+</body>
+</html>

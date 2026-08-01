@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Generation · MarketPulse AI</title>
+<link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+<div class="navbar">
+  <a class="brand" href="index.html">📈 MarketPulse AI</a>
+  
+</div>
+<div class="container">
+<h1 class="page-title">🎨  Image Generation</h1>
+<p class="page-subtitle">Endpoint: POST /generate-image  •  Use case: Text → Image</p>
+<div class="card">
+  <div class="section-title">Input</div>
+      <div class="form-group"><label class="form-label">prompt</label><input type="text" class="form-input" id="in-prompt"></div>
+      <button class="submit-btn" onclick="runModel()">Predict</button>
+</div>
+<div class="card">
+  <div class="section-title">Output</div>
+  <div class="output-card" id="model-output">Result will appear here…</div>
+</div>
+<script>
+const ENDPOINT = "/generate-image";
+
+async function runModel(){
+  const out = document.getElementById("model-output");
+  const prompt = document.getElementById("in-prompt").value.trim();
+
+  if (!prompt){
+    out.textContent = "⚠️ Please enter a prompt.";
+    return;
+  }
+
+  out.textContent = "⏳ Generating image, this can take a moment…";
+
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: prompt })
+    });
+
+    const json = await res.json();
+
+    if (json.status === "success"){
+      out.innerHTML = '<img src="' + json.generated_image + '" alt="generated image" style="max-width:100%; border-radius:8px;">';
+    } else {
+      out.textContent = "❌ Error: " + (json.detail || "generation failed");
+    }
+  } catch(err) {
+    out.textContent = "❌ Error: " + err.message;
+  }
+}
+</script>
+</div>
+</body>
+</html>
