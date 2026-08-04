@@ -42,7 +42,7 @@ class Trainer:
         model.compile('adam', 'sparse_categorical_crossentropy', metrics=['accuracy'])
         return model
 
-    def train(self, model, train_ds, val_ds, epochs=3):
+    def train(self, model, train_ds, val_ds, epochs=50):
         return model.fit(train_ds, validation_data=val_ds, epochs=epochs)
 
     def save(self, model, name):

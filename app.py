@@ -34,7 +34,7 @@ DETECTION_DIR = PROJECT_ROOT / "vision" / "Artifacts"
 load_dotenv()
 import asyncio
 import sys
-app = FastAPI()
+app = FastAPI(debug = True)
 
 # serve static files (css, js, images) from "static" folder
 app.mount("/static", StaticFiles(directory="static"), name="static")
