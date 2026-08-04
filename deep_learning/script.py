@@ -18,7 +18,7 @@ def run_training():
     print("Classes:", train_ds.class_names)
     
     cnn = t.build_cnn(n)
-    t.train(cnn, train_ds, val_ds, epochs=50)
+    t.train(cnn, train_ds, val_ds, epochs=10)
     t.save(cnn, "cnn_model.keras")
 
     tl = t.build_tl(n)

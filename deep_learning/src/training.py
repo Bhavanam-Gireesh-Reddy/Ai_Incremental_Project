@@ -24,7 +24,7 @@ class Trainer:
             layers.MaxPooling2D(),
             layers.Flatten(),
             layers.Dense(64, activation='relu'), 
-            layers.Dropout(0.5),
+            # layers.Dropout(0.5),
             layers.Dense(n, activation='softmax')])
         model.compile('adam', 'sparse_categorical_crossentropy', metrics=['accuracy'])
         return model
@@ -42,7 +42,7 @@ class Trainer:
         model.compile('adam', 'sparse_categorical_crossentropy', metrics=['accuracy'])
         return model
 
-    def train(self, model, train_ds, val_ds, epochs=50):
+    def train(self, model, train_ds, val_ds, epochs=10):
         return model.fit(train_ds, validation_data=val_ds, epochs=epochs)
 
     def save(self, model, name):
