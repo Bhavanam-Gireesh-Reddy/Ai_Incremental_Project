@@ -87,17 +87,17 @@ class MLModel:
             "precision": precision_score(
                 y_test,
                 predictions,
-                average="weighted"
+                # average="weighted"
             ),
             "recall": recall_score(
                 y_test,
                 predictions,
-                average="weighted"
+                # average="weighted"
             ),
             "f1_score": f1_score(
                 y_test,
                 predictions,
-                average="weighted"
+                # average="weighted"
             )
         }
 

@@ -3,134 +3,534 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
 <title>ML Model - Customer Churn Prediction</title>
+ 
 <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+ 
 </head>
+ 
 <body>
+ 
 <div class="navbar">
-    <a class="brand" href="index.html">📈 MarketPulse AI</a>
+    <a class="brand" href="/">📈 MarketPulse AI</a>
+ 
     <div class="nav-links">
+        <a class="nav-btn active" href="/">General</a>
     </div>
 </div>
+ 
+ 
 <div class="container">
-    <h1 class="page-title">📊 Customer Churn Prediction</h1>
-    <p class="page-subtitle">Endpoint: POST /predict-ml • Use Case: Customer Churn Prediction</p>
-
-    <!-- INPUT -->
-    <div class="card">
-        <div class="section-title">Input</div>
-        <div class="form-group">
-            <label class="form-label">Credit Score</label>
-            <input type="number" class="form-input" id="creditScore">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Geography</label>
-            <select class="form-input" id="geography">
-                <option>France</option>
-                <option>Germany</option>
-                <option>Spain</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Gender</label>
-            <select class="form-input" id="gender">
-                <option>Male</option>
-                <option>Female</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Age</label>
-            <input type="number" class="form-input" id="age">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Tenure</label>
-            <input type="number" class="form-input" id="tenure">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Balance</label>
-            <input type="number" class="form-input" id="balance">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Number Of Products</label>
-            <input type="number" class="form-input" id="numProducts">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Has Credit Card</label>
-            <select class="form-input" id="hasCrCard">
-                <option value="1">1</option>
-                <option value="0">0</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Is Active Member</label>
-            <select class="form-input" id="isActiveMember">
-                <option value="1">1</option>
-                <option value="0">0</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Estimated Salary</label>
-            <input type="number" class="form-input" id="estimatedSalary">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Model</label>
-            <select class="form-input" id="model">
-                <option>SVM</option>
-                <option>Decision Tree</option>
-                <option>Random Forest</option>
-            </select>
-        </div>
-        <button class="submit-btn" onclick="runModel()">Predict Churn</button>
-    </div>
-
-    <!-- OUTPUT -->
-    <div class="card">
-        <div class="section-title">Output</div>
-        <div class="output-card" id="model-output">Prediction result will appear here...</div>
-    </div>
+ 
+<h1 class="page-title">
+📊 Customer Churn Prediction
+</h1>
+ 
+<p class="page-subtitle">
+Endpoint: POST /predict-ml • Use Case: Customer Churn Prediction
+</p>
+ 
+ 
+ 
+<!-- INPUT CARD -->
+ 
+<div class="card">
+ 
+<div class="section-title">
+Input
 </div>
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Credit Score (300 - 850)
+</label>
+ 
+<input
+type="number"
+class="form-input"
+id="creditScore"
+placeholder="Enter credit score"
+min="300"
+max="850">
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Geography
+</label>
+ 
+<select class="form-input" id="geography">
+ 
+<option value="France">
+France
+</option>
+ 
+<option value="Germany">
+Germany
+</option>
+ 
+<option value="Spain">
+Spain
+</option>
+ 
+</select>
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Gender
+</label>
+ 
+<select class="form-input" id="gender">
+ 
+<option value="Male">
+Male
+</option>
+ 
+<option value="Female">
+Female
+</option>
+ 
+</select>
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Age (18 - 100)
+</label>
+ 
+<input
+type="number"
+class="form-input"
+id="age"
+placeholder="Enter age"
+min="18"
+max="100">
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Tenure (0 - 10)
+</label>
+ 
+<input
+type="number"
+class="form-input"
+id="tenure"
+placeholder="Enter tenure"
+min="0"
+max="10">
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Balance (>= 0)
+</label>
+ 
+<input
+type="number"
+class="form-input"
+id="balance"
+placeholder="Enter balance"
+min="0">
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Number Of Products (1 - 4)
+</label>
+ 
+<input
+type="number"
+class="form-input"
+id="numProducts"
+placeholder="Enter number of products"
+min="1"
+max="4">
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Has Credit Card
+</label>
+ 
+<select class="form-input" id="hasCrCard">
+ 
+<option value="1">
+Yes (1)
+</option>
+ 
+<option value="0">
+No (0)
+</option>
+ 
+</select>
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Is Active Member
+</label>
+ 
+<select class="form-input" id="isActiveMember">
+ 
+<option value="1">
+Yes (1)
+</option>
+ 
+<option value="0">
+No (0)
+</option>
+ 
+</select>
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Estimated Salary (>=0)
+</label>
+ 
+<input
+type="number"
+class="form-input"
+id="estimatedSalary"
+placeholder="Enter salary"
+min="0">
+ 
+</div>
+ 
+ 
+ 
+ 
+<div class="form-group">
+ 
+<label class="form-label">
+Model
+</label>
+ 
+<select class="form-input" id="model">
+ 
+<option>
+SVM
+</option>
+ 
+<option>
+Decision Tree
+</option>
+ 
+<option>
+Random Forest
+</option>
+ 
+</select>
+ 
+</div>
+ 
+ 
+ 
+<button
+class="submit-btn"
+onclick="runModel()">
+ 
+Predict Churn
+ 
+</button>
+ 
+ 
+</div>
+ 
+ 
+ 
+ 
+ 
+<!-- OUTPUT CARD -->
+ 
+ 
+<div class="card">
+ 
+<div class="section-title">
+Output
+</div>
+ 
+ 
+<div class="output-card" id="model-output">
+ 
+Prediction result will appear here...
+ 
+</div>
+ 
+ 
+</div>
+ 
+ 
+ 
+</div>
+ 
+ 
+ 
+ 
 <script>
+ 
+ 
 const ENDPOINT = "/predict-ml";
-
-async function runModel() {
-    const output = document.getElementById("model-output");
-
-    // 1. collect data from the form
-    const data = {
-        CreditScore: Number(document.getElementById("creditScore").value),
-        Geography: document.getElementById("geography").value,
-        Gender: document.getElementById("gender").value,
-        Age: Number(document.getElementById("age").value),
-        Tenure: Number(document.getElementById("tenure").value),
-        Balance: Number(document.getElementById("balance").value),
-        NumOfProducts: Number(document.getElementById("numProducts").value),
-        HasCrCard: Number(document.getElementById("hasCrCard").value),
-        IsActiveMember: Number(document.getElementById("isActiveMember").value),
-        EstimatedSalary: Number(document.getElementById("estimatedSalary").value),
-        Model: document.getElementById("model").value
-    };
-
-    output.innerHTML = "⏳ Processing...";
-
-    // 2. send data to backend and get result
-    try {
-        const response = await fetch(ENDPOINT, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-
-        // 3. show result in output card
-        output.innerHTML =
-            `<strong>Selected Model:</strong> ${result.model}<br><br>` +
-            `<strong>Prediction:</strong> ${result.prediction}`;
-
-    } catch (error) {
-        output.innerHTML = `❌ Error: ${error.message}`;
-    }
+ 
+ 
+ 
+async function runModel(){
+ 
+ 
+const output = document.getElementById("model-output");
+ 
+ 
+ 
+const data = {
+ 
+ 
+CreditScore:
+Number(document.getElementById("creditScore").value),
+ 
+ 
+Geography:
+document.getElementById("geography").value,
+ 
+ 
+Gender:
+document.getElementById("gender").value,
+ 
+ 
+Age:
+Number(document.getElementById("age").value),
+ 
+ 
+Tenure:
+Number(document.getElementById("tenure").value),
+ 
+ 
+Balance:
+Number(document.getElementById("balance").value),
+ 
+ 
+NumOfProducts:
+Number(document.getElementById("numProducts").value),
+ 
+ 
+HasCrCard:
+Number(document.getElementById("hasCrCard").value),
+ 
+ 
+IsActiveMember:
+Number(document.getElementById("isActiveMember").value),
+ 
+ 
+EstimatedSalary:
+Number(document.getElementById("estimatedSalary").value),
+ 
+ 
+Model:
+document.getElementById("model").value
+ 
+};
+ 
+ 
+ 
+ 
+// Frontend Validation
+ 
+ 
+if(data.CreditScore < 300 || data.CreditScore > 850){
+ 
+output.innerHTML =
+"❌ Credit Score must be between 300 and 850.";
+ 
+return;
+ 
 }
+ 
+ 
+ 
+if(data.Age < 18 || data.Age > 100){
+ 
+output.innerHTML =
+"❌ Age must be between 18 and 100.";
+ 
+return;
+ 
+}
+ 
+ 
+ 
+if(data.Tenure < 0 || data.Tenure > 10){
+ 
+output.innerHTML =
+"❌ Tenure must be between 0 and 10.";
+ 
+return;
+ 
+}
+ 
+ 
+ 
+if(data.Balance < 0){
+ 
+output.innerHTML =
+"❌ Balance cannot be negative.";
+ 
+return;
+ 
+}
+ 
+ 
+ 
+if(data.NumOfProducts < 1 || data.NumOfProducts > 4){
+ 
+output.innerHTML =
+"❌ Number of products must be between 1 and 4.";
+ 
+return;
+ 
+}
+ 
+ 
+ 
+if(data.EstimatedSalary < 0){
+ 
+output.innerHTML =
+"❌ Estimated Salary cannot be negative.";
+ 
+return;
+ 
+}
+ 
+ 
+ 
+output.innerHTML =
+"⏳ Processing...";
+ 
+ 
+ 
+ 
+try{
+ 
+ 
+const response = await fetch(
+ENDPOINT,
+{
+ 
+method:"POST",
+ 
+headers:
+{
+"Content-Type":"application/json"
+},
+ 
+body:
+JSON.stringify(data)
+ 
+});
+ 
+ 
+ 
+const result = await response.json();
+ 
+ 
+ 
+// Backend error handling
+ 
+if(!response.ok){
+ 
+output.innerHTML =
+"❌ " + result.detail;
+ 
+return;
+ 
+}
+ 
+ 
+ 
+ 
+output.innerHTML =
+ 
+`
+<strong>Selected Model:</strong>
+${result.model}
+ 
+<br><br>
+ 
+<strong>Prediction:</strong>
+${result.prediction}
+ 
+`;
+ 
+ 
+ 
+}
+ 
+catch(error){
+ 
+ 
+output.innerHTML =
+`❌ Error: ${error.message}`;
+ 
+ 
+}
+ 
+ 
+ 
+}
+ 
+ 
+ 
 </script>
+ 
+ 
 </body>
+ 
 </html>

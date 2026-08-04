@@ -70,10 +70,8 @@ async function runModel() {
         showResult(result);
 
     } catch (error) {
-        out.innerHTML =
-            "<span style='color:red'>❌ " +
-            error.message +
-            "</span>";
+    out.innerHTML =
+        "<span style='color:red'>❌ Entered product ID is not found</span>";
     }
 }
 

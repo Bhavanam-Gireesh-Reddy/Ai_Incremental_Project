@@ -167,32 +167,105 @@ def langchain_agent_page(request: Request):
 # ---------- API ENDPOINT ----------
 @app.post("/predict-ml")
 def predict_ml(data: ChurnInput):
-    from ml_tech.scripts.output import decision_tree,svm,random_forest
-
-    x=dict(data)
-    print(x)
-    li = list(x.values())
-    dt = li[:-1]
-    print(li,dt)
-    if li[-1].lower() == "svm":
-        result  = svm(dt)
-        print(result)
-    elif li[-1].lower() == "decision tree":
-        result  = decision_tree(dt)
-    elif li[-1].lower() == "random forest":
-        result  = random_forest(dt)
+    from ml_tech.scripts.output import decision_tree, svm, random_forest
+ 
+    # -------- Validation --------
+    if not (300 <= data.CreditScore <= 850):
+        raise HTTPException(
+            status_code=400,
+            detail="Credit Score must be between 300 and 850."
+        )
+ 
+    if not (18 <= data.Age <= 100):
+        raise HTTPException(
+            status_code=400,
+            detail="Age must be between 18 and 100."
+        )
+ 
+    if not (0 <= data.Tenure <= 10):
+        raise HTTPException(
+            status_code=400,
+            detail="Tenure must be between 0 and 10."
+        )
+ 
+    if data.Balance < 0:
+        raise HTTPException(
+            status_code=400,
+            detail="Balance cannot be negative."
+        )
+ 
+    if not (1 <= data.NumOfProducts <= 4):
+        raise HTTPException(
+            status_code=400,
+            detail="Number of Products must be between 1 and 4."
+        )
+ 
+    if data.EstimatedSalary < 0:
+        raise HTTPException(
+            status_code=400,
+            detail="Estimated Salary cannot be negative."
+        )
+ 
+    if data.HasCrCard not in [0, 1]:
+        raise HTTPException(
+            status_code=400,
+            detail="Has Credit Card must be 0 or 1."
+        )
+ 
+    if data.IsActiveMember not in [0, 1]:
+        raise HTTPException(
+            status_code=400,
+            detail="Is Active Member must be 0 or 1."
+        )
+ 
+    if data.Geography not in ["France", "Germany", "Spain"]:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid Geography."
+        )
+ 
+    if data.Gender not in ["Male", "Female"]:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid Gender."
+        )
+ 
+    # -------- Prediction --------
+    features = [
+        data.CreditScore,
+        data.Geography,
+        data.Gender,
+        data.Age,
+        data.Tenure,
+        data.Balance,
+        data.NumOfProducts,
+        data.HasCrCard,
+        data.IsActiveMember,
+        data.EstimatedSalary
+    ]
+ 
+    model = data.Model.lower()
+ 
+    if model == "svm":
+        result = svm(features)
+ 
+    elif model == "decision tree":
+        result = decision_tree(features)
+ 
+    elif model == "random forest":
+        result = random_forest(features)
+ 
     else:
-        result = "Model Not defined"
-        
-    
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid model selected."
+        )
+ 
     return {
         "model": data.Model,
         "prediction": result
     }
     
-
-
-
 # ---------- API ENDPOINTS ----------
 @app.post("/forecast-arima")
 def forecast_arima(data: ForecastInput):
